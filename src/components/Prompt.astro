@@ -109,7 +109,7 @@
         out.appendChild(p);
       }
       else if (a === 'echo') say(rest.join(' '));
-      else say('command not found: ' + a + ' — type help', 'err');
+      else say('command not found: ' + a + '. type help', 'err');
     }
     hi = hist.length;
     input.value = '';
@@ -145,7 +145,7 @@
         () => {
           if (mailNoted) return;
           mailNoted = true;
-          say('ankitpasayat@gmail.com copied to clipboard — mail app opening if you have one', 'cmt');
+          say('ankitpasayat@gmail.com copied to clipboard. mail app opening if you have one', 'cmt');
         },
         () => {},
       );

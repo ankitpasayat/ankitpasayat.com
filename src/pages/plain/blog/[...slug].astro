@@ -1,6 +1,6 @@
 ---
 import Plain from '../../../layouts/Plain.astro';
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -8,7 +8,12 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+// You are already in plain mode here, so in-content /plain links flip to their
+// terminal twins (the terminal template renders them as written).
+const html = (post.rendered?.html ?? '').replace(
+  /href="\/plain(\/[^"]*)?"/g,
+  (_, rest) => `href="${rest || '/'}"`,
+);
 ---
 
 <Plain
@@ -19,7 +24,7 @@ const { Content } = await render(post);
   <article>
     <h1>{post.data.title}</h1>
     <p class="dim">{post.data.date.toISOString().slice(0, 10)}</p>
-    <Content />
+    <Fragment set:html={html} />
   </article>
 </Plain>
 

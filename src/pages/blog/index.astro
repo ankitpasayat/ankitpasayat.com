@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Base title="blog" description="writing by ankit pasayat">
+  <main>
+    <header class="sysline">
+      <span>ssh home@ankitpasayat.com</span>
+      <a href="/">[ home ]</a>
+    </header>
+
+    <div class="line">
+      <span class="prompt-user">$</span> ls
+    </div>
+    {
+      posts.length === 0 ? (
+        <p class="out">
+          total 0 <span class="cmt">— nothing published yet.</span>
+        </p>
+      ) : (
+        <div class="grid">
+          {posts.map((post) => (
+            <Fragment>
+              <span class="cmt">{post.data.date.toISOString().slice(0, 10)}</span>
+              <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+            </Fragment>
+          ))}
+        </div>
+      )
+    }
+
+    <footer><a href="/">← home</a> · <a href="/plain/blog">plain</a></footer>
+  </main>
+</Base>

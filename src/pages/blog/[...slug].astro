@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Base title={post.data.title} description={post.data.description ?? post.data.title}>
+  <main>
+    <header class="sysline">
+      <span>ssh home@ankitpasayat.com</span>
+      <a href="/blog">[ ../ ]</a>
+    </header>
+
+    <div class="line">
+      <span class="prompt-user">$</span> cat {post.id}.md
+    </div>
+    <article class="doc">
+      <h1 class="phosphor">{post.data.title}</h1>
+      <p class="cmt">{post.data.date.toISOString().slice(0, 10)}</p>
+      <Content />
+    </article>
+
+    <footer><a href="/blog">← blog</a> · <a href="/">home</a> · <a href={`/plain/blog/${post.id}/`}>plain</a></footer>
+  </main>
+</Base>

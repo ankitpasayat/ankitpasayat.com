@@ -1,0 +1,147 @@
+---
+// The one interactive island on the site: a working prompt.
+// Boots with `whoami` pre-typed, waiting for Enter (or a click on ⏎).
+// Everything it prints already exists as static HTML — it clones those
+// nodes, so content lives in exactly one place and works with JS off.
+---
+
+<div id="cli-out" role="log" aria-live="polite"></div>
+<form id="cli" autocomplete="off">
+  <label class="sr-only" for="cmd">terminal command (try: help)</label>
+  <span class="prompt-user blink">$</span>
+  <input
+    id="cmd"
+    name="cmd"
+    value="whoami"
+    spellcheck="false"
+    autocapitalize="none"
+    autocorrect="off"
+    enterkeyhint="go"
+    placeholder="type a command"
+  />
+  <button type="submit" class="enter pulse" aria-label="run command">⏎</button>
+</form>
+
+<script>
+  const out = document.getElementById('cli-out')!;
+  const input = document.getElementById('cmd') as HTMLInputElement;
+  const form = document.getElementById('cli')!;
+
+  const PAGES: Record<string, string> = {
+    blog: '/blog',
+    now: '/now',
+    uses: '/uses',
+    plain: '/plain',
+    home: '/',
+  };
+  const COMMANDS = ['ls projects', 'ls products', 'open resume', 'open blog', 'open now', 'open uses', 'cat contact.txt', 'whoami', 'plain', 'help'];
+  const hist: string[] = [];
+  let hi = 0;
+  let mailNoted = false;
+
+  function fit() {
+    const len = (input.value || input.placeholder).length;
+    input.style.width = Math.max(len + 1, 3) + 'ch';
+  }
+  fit();
+  input.addEventListener('input', fit);
+
+  function echo(cmd: string) {
+    const d = document.createElement('div');
+    d.className = 'line';
+    d.innerHTML = '<span class="prompt-user">$</span> ';
+    d.appendChild(document.createTextNode(cmd));
+    out.appendChild(d);
+  }
+  function say(text: string, cls = 'out') {
+    const d = document.createElement('div');
+    d.className = cls;
+    d.textContent = text;
+    out.appendChild(d);
+  }
+  function clone(id: string) {
+    const src = document.getElementById(id);
+    if (!src) return;
+    const n = src.cloneNode(true) as HTMLElement;
+    n.removeAttribute('id');
+    n.hidden = false;
+    out.appendChild(n);
+  }
+  function openResume() {
+    say('opening resume.pdf in a new tab …', 'cmt');
+    window.open('/resume.pdf', '_blank', 'noopener');
+  }
+  function go(url: string, label: string) {
+    say('opening ' + label + ' …', 'cmt');
+    location.href = url;
+  }
+  function run(raw: string) {
+    document.querySelector('.enter')?.classList.remove('pulse');
+    const c = raw.trim();
+    echo(c);
+    if (c) {
+      hist.push(c);
+      const [a, ...rest] = c.toLowerCase().split(/\s+/);
+      const arg = rest.join(' ');
+      if (a === 'help' || a === '?' || a === 'man') clone('help-out');
+      else if (a === 'whoami' || a === 'who') clone('whoami-out');
+      else if ((a === 'ls' && arg.startsWith('product')) || a === 'products') clone('products-out');
+      else if ((a === 'ls' && (!arg || arg.startsWith('project'))) || a === 'projects') clone('projects-out');
+      else if ((a === 'cat' && arg.startsWith('contact')) || a === 'contact' || a === 'mail') clone('contact-out');
+      else if (a === 'resume' || a === 'cv') openResume();
+      else if (a === 'open' || a === 'cd' || a === 'xdg-open') {
+        const key = arg.replace(/^[.~]?\/+/, '').replace(/\/+$/, '').replace(/\.(pdf|md|txt)$/, '');
+        if (key === 'resume' || key === 'cv') openResume();
+        else if (PAGES[key]) go(PAGES[key], key);
+        else say(a + ': ' + (arg || '(nothing)') + ': no such file or directory', 'err');
+      } else if (PAGES[a] && !arg) go(PAGES[a], a);
+      else if (a === 'clear' || a === 'cls') out.innerHTML = ''; // hidden nicety: back to boot screen
+      else if (a === 'sudo') say('nice try.');
+      else if (a === 'exit' || a === 'logout' || a === 'q') go('/plain', 'plain mode');
+      else if (a === 'vim' || a === 'nano' || a === 'emacs') say('no $EDITOR on this box. type help');
+      else if (a === 'rm') say('permission denied.');
+      else if (a === 'pwd') say('/home/ankit');
+      else if (a === 'echo') say(rest.join(' '));
+      else say('command not found: ' + a + ' — type help', 'err');
+    }
+    hi = hist.length;
+    input.value = '';
+    fit();
+    input.scrollIntoView({ block: 'nearest' });
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    run(input.value);
+  });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowUp') {
+      if (hi > 0) { hi--; input.value = hist[hi] ?? ''; e.preventDefault(); }
+    } else if (e.key === 'ArrowDown') {
+      if (hi < hist.length) { hi++; input.value = hist[hi] ?? ''; e.preventDefault(); }
+    } else if (e.key === 'Tab' && input.value.trim()) {
+      const v = input.value.trimStart().toLowerCase();
+      const m = COMMANDS.find((x) => x.startsWith(v));
+      if (m) input.value = m;
+      e.preventDefault();
+    }
+    fit();
+  });
+  // help entries marked data-cmd run like typed commands (works on clones too)
+  document.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    const b = t.closest('[data-cmd]') as HTMLElement | null;
+    if (b?.dataset.cmd) run(b.dataset.cmd);
+    // mailto still fires; copy is the fallback for machines with no mail app
+    if (t.closest('a[href^="mailto:"]')) {
+      navigator.clipboard?.writeText('ankitpasayat@gmail.com').then(
+        () => {
+          if (mailNoted) return;
+          mailNoted = true;
+          say('ankitpasayat@gmail.com copied to clipboard — mail app opening if you have one', 'cmt');
+        },
+        () => {},
+      );
+    }
+  });
+</script>

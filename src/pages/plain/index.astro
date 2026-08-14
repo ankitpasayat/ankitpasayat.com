@@ -1,0 +1,50 @@
+---
+import Plain from '../../layouts/Plain.astro';
+---
+
+<Plain terminal="/">
+  <h1>Ankit Pasayat</h1>
+  <p class="role">Senior engineer — Bengaluru, India · <em>open to work</em></p>
+
+  <hr />
+
+  <p><a href="/resume.pdf" download="Ankit-Pasayat-Resume.pdf">Résumé (PDF)</a></p>
+  <p class="links" aria-label="contact">
+    <a href="mailto:ankitpasayat@gmail.com">ankitpasayat@gmail.com</a>
+    <a href="https://github.com/ankitpasayat">GitHub</a>
+    <a href="https://x.com/PasayatAnkit">X</a>
+  </p>
+
+  <hr />
+
+  <ul aria-label="projects">
+    <li><a href="https://github.com/ankitpasayat/chatroast">chatroast</a> — WhatsApp chat export → long-form AI report, local-first</li>
+    <li><a href="https://github.com/ankitpasayat/prahari">prahari</a> — land-change monitoring over India <span class="dim">· <a href="https://ankitpasayat.github.io/prahari/">live</a></span></li>
+    <li><a href="https://github.com/ankitpasayat/qu-zing">qu-zing</a> — realtime trivia, bet on your confidence</li>
+  </ul>
+
+  <hr />
+
+  <ul aria-label="products">
+    <li><a href="https://hireaclanker.com">hireaclanker.com</a> — adaptive GMAT Focus prep</li>
+    <li><a href="https://thepile.gg">thepile.gg</a> — track and rate your games, no critics</li>
+  </ul>
+</Plain>
+
+<style>
+  .role { color: #6b6455; }
+  .role em { font-style: italic; color: #7d5a1c; }
+  .links {
+    display: flex;
+    justify-content: center;
+    column-gap: 1.4rem;
+    row-gap: 0.35rem;
+    flex-wrap: wrap;
+  }
+  li :global(.dim a) {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: currentColor;
+  }
+</style>

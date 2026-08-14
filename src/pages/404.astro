@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="404" description="page not found">
+  <main>
+    <header class="sysline">
+      <span>ssh home@ankitpasayat.com</span>
+      <a href="/plain">[ plain mode ]</a>
+    </header>
+
+    <div class="line">
+      <span class="prompt-user">$</span> open that-page
+    </div>
+    <p class="err">open: that-page: no such file or directory (404)</p>
+    <p class="out" style="margin-top:1.4rem">
+      try <a href="/">home</a>, <a href="/blog">blog</a>, or the <a href="/plain">plain version</a>.
+    </p>
+  </main>
+</Base>

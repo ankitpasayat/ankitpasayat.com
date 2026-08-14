@@ -1,0 +1,52 @@
+---
+import Plain from '../../../layouts/Plain.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Plain
+  title={post.data.title}
+  description={post.data.description ?? post.data.title}
+  terminal={`/blog/${post.id}/`}
+>
+  <article>
+    <h1>{post.data.title}</h1>
+    <p class="dim">{post.data.date.toISOString().slice(0, 10)}</p>
+    <Content />
+  </article>
+</Plain>
+
+<style is:global>
+  /* global: markdown output carries no scope attributes */
+  article { text-align: left; }
+  article > h1, article > h1 + .dim { text-align: center; }
+  article :is(p, ul, ol, pre, blockquote) { margin-top: 0.9rem; }
+  article :is(h2, h3) { margin-top: 1.8rem; font-weight: 400; color: #7d5a1c; }
+  article ul { list-style: disc; padding-left: 1.25rem; display: block; }
+  /* !important: shiki inlines its dark theme; plain mode is monochrome paper */
+  article pre {
+    overflow-x: auto;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd7c9;
+    font-size: 0.85em;
+    background: #f6f3ec !important;
+    color: #211e18 !important;
+  }
+  article pre span { color: inherit !important; }
+  article code {
+    font-family: ui-monospace, 'Cascadia Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  }
+  article blockquote { border-left: 2px solid #ddd7c9; padding-left: 1rem; color: #6b6455; }
+  article :is(p, li) a {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+</style>

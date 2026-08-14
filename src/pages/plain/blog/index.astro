@@ -1,0 +1,29 @@
+---
+import Plain from '../../../layouts/Plain.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Plain title="Blog — Ankit Pasayat" description="Writing by Ankit Pasayat" terminal="/blog">
+  <h1>Blog</h1>
+
+  <hr />
+
+  {
+    posts.length === 0 ? (
+      <p class="dim">Nothing published yet.</p>
+    ) : (
+      <ul>
+        {posts.map((post) => (
+          <li>
+            <span class="dim">{post.data.date.toISOString().slice(0, 10)}</span> ·{' '}
+            <a href={`/plain/blog/${post.id}/`}>{post.data.title}</a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Plain>

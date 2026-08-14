@@ -1,0 +1,93 @@
+---
+import Base from '../layouts/Base.astro';
+import Prompt from '../components/Prompt.astro';
+
+const built = new Date().toDateString();
+---
+
+<Base>
+  <main>
+    <header class="sysline">
+      <span>ssh home@ankitpasayat.com</span>
+      <a href="/plain">[ plain mode — no frills ]</a>
+    </header>
+    <p class="cmt">last login: {built} · type a command or click one below</p>
+
+    <section id="session" aria-label="session transcript">
+      <h1 class="sr-only">Ankit Pasayat — senior engineer</h1>
+
+      <div class="line">
+        <span class="prompt-user">$</span> help
+      </div>
+      <div id="help-out" class="grid">
+        <button type="button" class="linklike" data-cmd="ls projects">ls projects</button><span class="cmt">what i've built</span>
+        <button type="button" class="linklike" data-cmd="ls products">ls products</button><span class="cmt">live products</span>
+        <a href="/resume.pdf" target="_blank" rel="noopener">open resume</a><span class="cmt">résumé pdf, new tab</span>
+        <a href="/blog">open blog</a><span class="cmt">writing</span>
+        <a href="/now">open now</a><span class="cmt">current focus</span>
+        <a href="/uses">open uses</a><span class="cmt">tools</span>
+        <button type="button" class="linklike" data-cmd="cat contact.txt">cat contact.txt</button><span class="cmt">email · github · x</span>
+        <button type="button" class="linklike" data-cmd="whoami">whoami</button><span class="cmt">who is this guy</span>
+        <a href="/plain">plain</a><span class="cmt">no-frills html, for humans in a hurry</span>
+        <button type="button" class="linklike" data-cmd="help">help</button><span class="cmt">this list</span>
+      </div>
+
+      <!-- clone sources for the prompt; revealed as-is when JS is off -->
+      <div class="js-off" hidden>
+        <div class="line">
+          <span class="prompt-user">$</span> whoami
+        </div>
+        <div id="whoami-out" class="out">
+          ankit pasayat — senior engineer<br />
+          <span class="status-dot">●</span> open to work · bengaluru, in
+        </div>
+      </div>
+      <div class="js-off" hidden>
+        <div class="line">
+          <span class="prompt-user">$</span> ls projects/
+        </div>
+        <div id="projects-out" class="grid">
+          <a href="https://github.com/ankitpasayat/chatroast">chatroast/</a>
+          <span>whatsapp group chat export → long-form ai report, local-first <span class="cmt">· typescript</span></span>
+          <a href="https://github.com/ankitpasayat/prahari">prahari/</a>
+          <span>land-change monitoring over india from sentinel-2 geo-embeddings <span class="cmt">· duckdb · fastapi · react ·</span> <a href="https://ankitpasayat.github.io/prahari/">live ↗</a></span>
+          <a href="https://github.com/ankitpasayat/qu-zing">qu-zing/</a>
+          <span>realtime multiplayer trivia — bet tokens on your confidence <span class="cmt">· typescript</span></span>
+        </div>
+      </div>
+      <div class="js-off" hidden>
+        <div class="line">
+          <span class="prompt-user">$</span> ls products/
+        </div>
+        <div id="products-out" class="grid">
+          <a href="https://hireaclanker.com">hireaclanker.com</a>
+          <span>adaptive gmat focus prep — diagnostic, day-by-day plan, full mocks</span>
+          <a href="https://thepile.gg">thepile.gg</a>
+          <span>track and rate your games — your scores, no critics</span>
+        </div>
+      </div>
+      <div class="js-off" hidden>
+        <div class="line">
+          <span class="prompt-user">$</span> cat contact.txt
+        </div>
+        <div id="contact-out" class="grid">
+          <span class="cmt">mail</span><a href="mailto:ankitpasayat@gmail.com">ankitpasayat@gmail.com</a>
+          <span class="cmt">github</span><a href="https://github.com/ankitpasayat">github.com/ankitpasayat</a>
+          <span class="cmt">x</span><a href="https://x.com/PasayatAnkit">@PasayatAnkit</a>
+        </div>
+      </div>
+      <noscript>
+        <style>
+          .js-off[hidden] { display: block !important; }
+          #cli, #help-out .linklike { display: none !important; }
+        </style>
+      </noscript>
+    </section>
+
+    <Prompt />
+
+    <footer>
+      © 2026 ankit pasayat · <a href="/plain">plain</a> · <a href="/resume.pdf" download="Ankit-Pasayat-Resume.pdf">resume ↓</a>
+    </footer>
+  </main>
+</Base>

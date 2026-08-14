@@ -101,6 +101,13 @@
       else if (a === 'vim' || a === 'nano' || a === 'emacs') say('no $EDITOR on this box. type help');
       else if (a === 'rm') say('permission denied.');
       else if (a === 'pwd') say('/home/ankit');
+      else if (a === 'ps' || a === 'top') {
+        const p = document.createElement('div');
+        p.className = 'out';
+        p.style.whiteSpace = 'pre';
+        p.textContent = '  PID TTY   CMD\n    1 tty1  -zsh\n   42 tty1  claude code\n  407 tty1  astro dev';
+        out.appendChild(p);
+      }
       else if (a === 'echo') say(rest.join(' '));
       else say('command not found: ' + a + ' — type help', 'err');
     }

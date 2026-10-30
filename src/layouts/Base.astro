@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import KoiPond from '../components/KoiPond.astro';
 
 interface Props {
   title?: string;
@@ -22,13 +23,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#0f0c07" />
+    <meta name="theme-color" content="#071318" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content="website" />
   </head>
   <body>
+    <KoiPond />
     <div class="crt-band" aria-hidden="true"></div>
     <slot />
   </body>

@@ -1,6 +1,7 @@
 ---
-// Shared chrome for plain mode: zero JS, zero shared CSS with the terminal,
-// prints cleanly. Deliberately its own quiet world — paper, serif, hairlines.
+import KoiPond from '../components/KoiPond.astro';
+// Paper, serif, hairlines, with a light version of the optional pond wallpaper.
+// Content and navigation still work without JavaScript and print cleanly.
 interface Props {
   title?: string;
   description?: string;
@@ -36,15 +37,23 @@ const nav = [
         min-height: 100svh;
         display: grid;
         place-items: center;
-        background: #fbfaf7;
+        background: radial-gradient(ellipse at 75% 65%, #e8eee2, #f8f7ef 65%);
         color: #211e18;
         font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
         font-size: 1.06rem;
         line-height: 1.75;
-        padding: clamp(1.5rem, 5vw, 3rem) 1.25rem;
+        padding: clamp(1.5rem, 5vw, 3rem) 1.25rem 7rem;
         text-align: center;
       }
-      main { max-width: 34rem; width: 100%; min-width: 0; }
+      main {
+        position: relative; z-index: 2;
+        max-width: 38rem; width: 100%; min-width: 0;
+        padding: clamp(1.5rem, 4vw, 2.5rem);
+        background: #fbfaf7de;
+        border: 1px solid #b2b6a434;
+        border-radius: 5px;
+      }
+      @media (max-width: 600px) { main { margin-top: 5rem; padding: 1.3rem; background: #fbfaf7d4; } }
       h1 {
         font-size: clamp(1.8rem, 5vw, 2.2rem);
         font-weight: 400;
@@ -78,10 +87,11 @@ const nav = [
         row-gap: 0.35rem;
         flex-wrap: wrap;
       }
-      @media print { footer { display: none; } }
+      @media print { footer { display: none; } body, main { background: white; border: 0; padding: 0; } }
     </style>
   </head>
   <body>
+    <KoiPond theme="light" />
     <main>
       <slot />
       <hr />

@@ -1,0 +1,76 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=0.5in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage[colorlinks=true,urlcolor=blue,linkcolor=blue]{hyperref}
+\hypersetup{pdftitle={Ankit Pasayat - Software Engineer},pdfauthor={Ankit Pasayat}}
+\titleformat{\section}{\large\bfseries\color{blue}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{9pt}{4pt}
+\setlist[itemize]{leftmargin=*,nosep,topsep=2pt,partopsep=0pt,itemsep=1pt}
+\setlength{\parindent}{0pt}
+\pagenumbering{gobble}
+
+\begin{document}
+{\LARGE\textbf{Ankit Pasayat, Software Engineer}}\\[4pt]
+Bengaluru \quad | \quad \href{mailto:ankitpasayat@gmail.com}{ankitpasayat@gmail.com}\\[2pt]
+\href{https://ankitpasayat.com}{ankitpasayat.com} \quad | \quad \href{https://github.com/ankitpasayat}{github.com/ankitpasayat}
+
+\section*{EXPERIENCE}
+\textbf{Founder \& CEO, Hire A Clanker}\\
+Mar 2026 -- Oct 2026
+% Active operating role ended on 22 October 2026, confirmed by Ankit.
+\begin{itemize}
+  \item Conceived a GMAT-preparation product, built the initial website and core functionality, and developed the question content; collaborated with a co-founder on UX and interface improvements.
+  \item Handed over the product and ongoing operations to the co-founder in October 2026.
+\end{itemize}
+\vspace{4pt}
+\textbf{Senior Software Engineer, Shell (via Andor Tech), Bengaluru}\\
+Nov 2024 -- Feb 2026\\
+\textit{Employed by Andor Tech; worked exclusively on Shell projects.}
+% Exact last working day, confirmed by Ankit: 27 February 2026.
+\begin{itemize}
+  \item Mentored 3 engineers (1 backend, 2 frontend), conducted code reviews, defined technical architecture, and managed delivery timelines across multiple initiatives.
+  \item Architected a geospatial file-storage platform for carbon-credit projects across 2 Shell subsidiaries in Australia and Europe, managing 800+ files. Implemented a vector database for GIS querying, designed the PostgreSQL schema, and deployed a FastAPI backend with custom batch uploads.
+  \item Led the Fiber to Desk sensor-visualization platform and Tag Configurator Tool using FastAPI, Django and React. Built a C\# API to address PI Web API limitations, and implemented Microsoft Entra ID authentication and asynchronous tasks for a legacy Salesforce-based tag-management migration.
+\end{itemize}
+\vspace{4pt}
+\textbf{Software Engineer, Cisco (Security Business Group), Bengaluru}\\
+Jul 2022 -- Jun 2024
+\begin{itemize}
+  \item Developed a licensing-management component for next-generation firewalls using GWT, Perl and MySQL; managed enterprise license validation and optimized SQL queries with connection pooling.
+  \item Received organizational recognition twice for resolving critical production escalations: a cryptography-library upgrade that broke license activation, and a race condition in multithreaded logic affecting enterprise customers.
+  \item Built REST APIs and caching for license management. Fixed 15+ customer-reported defects, established daily bug triage with QA and support, and took on architecture decisions and technical mentoring.
+\end{itemize}
+\vspace{4pt}
+\textbf{Specialist Programmer, Infosys, Bengaluru}\\
+May 2019 -- Jun 2022
+\begin{itemize}
+  \item Designed and deployed Node.js/Express REST APIs with JWT authentication for a Saudi smart-city platform and a Belgian credit-insurance platform; integrated IoT devices and implemented Redis caching to reduce database load and improve stability.
+  \item Refactored a legacy monolith towards microservices and optimized database queries. Built an asynchronous Excel-processing pipeline using Node.js, Bull and MongoDB for monthly employee records, with retries and background processing.
+\end{itemize}
+
+\section*{SELECTED PROJECT}
+\textbf{Connectivity Credits -- Independent Prototype} \hfill Oct 2026\\
+\href{https://github.com/ankitpasayat/connectivity-credits-demo}{github.com/ankitpasayat/connectivity-credits-demo}
+\begin{itemize}
+  \item Built a TypeScript/Express and React prototype with PostgreSQL and Apache Kafka that evaluates synthetic school-connectivity measurements against versioned policies and records auditable demo credits. Verification and credits are simulated.
+  \item Implemented duplicate protection, transactional rollback and safe retries, a durable outbox/inbox, and an operator console. Added automated API/broker tests, Docker/Compose setup, CI checks and a technical overview.
+\end{itemize}
+
+\section*{EDUCATION}
+\textbf{B.Tech., Computer Science and Engineering}\\
+SRM Institute of Science and Technology, Chennai \hfill Jun 2015 -- May 2019\\
+Percentage: 80.11\%
+
+\section*{SKILLS}
+\begin{itemize}
+  \item \textbf{Languages:} JavaScript, TypeScript, Python, Perl, Java
+  \item \textbf{Backend \& events:} Node.js/Express, FastAPI, Django, REST APIs, Bull; Apache Kafka (prototype experience)
+  \item \textbf{Frontend:} React.js, Next.js, Angular, GWT, HTML, CSS
+  \item \textbf{Data:} PostgreSQL, MySQL, MongoDB, Redis
+  \item \textbf{Cloud \& tools:} Azure, Microsoft Entra ID, SSO integration, Git, Perforce
+\end{itemize}
+\end{document}
